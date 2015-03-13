@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+
+	<title>Анализ списка долгов по ЖКХ в Зеленограде</title>
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="/css/font-awesome.min.css" />
+	<link type="text/css" rel="stylesheet" href="/css/pace.min.css" />
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12">
+				<h3>Анализ списка долгов по ЖКХ в Зеленограде</h3>
+				По мотивам <a href="http://www.zelenograd.ru/news/12677/">новости на zelenograd.ru</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<hr/>
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Фильтр по району..." id="debts-filter"/>
+					<div class="input-group-btn">
+						<a href="#" class="btn btn-success" id="debts-button-filter">
+							<span class="fa fa-filter"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<br/>
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Долг больше чем..." id="debts-filter-min"/>
+					<div class="input-group-btn">
+						<a href="#" class="btn btn-success" id="debts-button-filter-min">
+							<span class="fa fa-filter"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<br />
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Долг меньше чем..." id="debts-filter-max" />
+					<div class="input-group-btn">
+						<a href="#" class="btn btn-success" id="debts-button-filter-max">
+							<span class="fa fa-filter"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h4>Общая статистика</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<h5>
+					Районов должников: <span id="debts-blocks-quantity">0</span>
+				</h5>
+				<h5>
+					Квартир должников: <span id="debts-flats-quantity">0</span>
+				</h5>
+				<h5>
+					Общая сумма долга: <span id="debts-sum">0</span> <span class="fa fa-ruble"></span>
+				</h5>
+			</div>
+			<div class="col-xs-4">
+				<h5>
+					Средний долг: <span id="debts-avg">0</span> <span class="fa fa-ruble"></span>
+				</h5>
+				<h5>
+					Медианный долг: <span id="debts-median">0</span> <span class="fa fa-ruble"></span>
+				</h5>
+			</div>
+			<div class="col-xs-4">
+				<h5>
+					Самый большой долг: <span id="debts-max">0</span> <span class="fa fa-ruble"></span>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<hr />
+			<div class="col-xs-6">
+				<h5>Топ 5 районов должников</h5>
+				<table id="debts-blocks-top" class="table table-striped">
+					<tbody>
+						<tr>
+							<th>Район</th>
+							<th>Долг</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-xs-6">
+				<h5>Топ 5 квартир должников</h5>
+				<table id="debts-flats-top" class="table table-striped">
+					<tr>
+						<th>Адрес</th>
+						<th>Долг</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<hr/>
+			<div class="col-xs-12">
+				<a id="debts-chart-link"></a>
+				<h4>Распределние долгов по районам</h4>
+				<div class="alert alert-info">
+					<span class="fa fa-info"></span> Для того, чтобы можно было пользоваться этим графиком, рекомендуется использовать фильтр выше. Например, &laquo;к.8&raquo; поможет отфильтровать результаты по 8 району.
+				</div>
+				<a href="#debts-chart-link" class="btn btn-default" id="debts-button-display-chart">Показать график</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<canvas id="debts-chart-bar"></canvas>
+			</div>
+		</div>
+		<div class="row">
+			<hr />
+			<div class="col-xs-12">
+				<a id="debts-list-link"></a>
+				<h4>Список должников</h4>
+				<div class="alert alert-warning">
+					<span class="fa fa-warning"></span>
+					Это ресурсозатратный блок. Поэтому если вы хотите посмотреть всех списком, нажмите на кнопку ниже.
+				</div>
+				<a href="#debts-list-link" class="btn btn-warning" id="debts-button-display-all">
+					Показать список всех должников
+				</a>
+				<br />
+				<br />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<table id="debts-list" class="table table-striped">
+					<tr>
+						<th>Адрес</th>
+						<th>Долг</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="data.min.js"></script>
+
+	<script type="text/javascript" src="/scripts/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/scripts/pace-1.0.2.min.js"></script>
+	<script type="text/javascript" src="/scripts/jquery.number.min.js"></script>
+	<script type="text/javascript" src="/scripts/math.min.js"></script>
+	<script type="text/javascript" src="/scripts/chart.core.min.js"></script>
+	<script type="text/javascript" src="/scripts/chart.bar.min.js"></script>
+	<script type="text/javascript" src="/scripts/common.min.js"></script>
+</body>
+</html>
