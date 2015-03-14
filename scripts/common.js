@@ -103,9 +103,16 @@ var dataRefresh = function () {
 
 	$('#debts-flats-quantity').text(debtsFlatsQuantity);
 	$('#debts-sum').text($.number(debtsSum, 2, ',', ' '));
-	$('#debts-avg').text($.number(math.sum(debtsArray) / debtsArray.length, 2, ',', ' '));
-	$('#debts-median').text($.number(math.median(debtsArray), 2, ',', ' '));
-	$('#debts-max').text($.number(math.max(debtsArray), 2, ',', ' '));
+	
+	if(debtsArray.length > 0) {
+		$('#debts-avg').text($.number(math.sum(debtsArray) / debtsArray.length, 2, ',', ' '));
+		$('#debts-median').text($.number(math.median(debtsArray), 2, ',', ' '));
+		$('#debts-max').text($.number(math.max(debtsArray), 2, ',', ' '));
+	} else {
+		$('#debts-avg').text($.number(0, 2, ',', ' '));
+		$('#debts-median').text($.number(0, 2, ',', ' '));
+		$('#debts-max').text($.number(0, 2, ',', ' '));
+	}
 
 	$('#debts-blocks-top tr.removable').remove();
 	$.each(top5Blocks, function (index, value) {
